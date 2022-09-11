@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "zizser-app",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

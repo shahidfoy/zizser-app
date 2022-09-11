@@ -1,0 +1,7 @@
+{
+  "name": "zizser-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

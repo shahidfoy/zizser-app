@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      ZIZseR <ion-icon name="bonfire"></ion-icon>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">ZIZseR <ion-icon name="bonfire"></ion-icon></ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="find">
+    <div id="title" *ngIf="websiteMetaData.url === ''">
+      <h1><ion-icon name="bonfire"></ion-icon></h1>
+    </div>
+    <div>
+      <ion-card>
+        <div class="flex">
+          <ion-input placeholder="Enter URL.." [(ngModel)]="url"></ion-input>
+          <ion-button color="light" class="ion-activatable ripple-parent" (click)="retrieveWebsiteMetaData()">
+            Find
+            <ion-ripple-effect></ion-ripple-effect>
+          </ion-button>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+
+  <div *ngIf="websiteMetaData.url !== ''">
+    <ion-card>
+      <ion-item *ngIf="websiteMetaData.imageLink !== null">
+        <ion-img [src]="websiteMetaData.imageLink"></ion-img>
+      </ion-item>
+      <ion-card-header>
+        <ion-card-title *ngIf="websiteMetaData.title !== null">{{ websiteMetaData.title | unescape }}</ion-card-title>
+        <ion-card-subtitle><a [href]="websiteMetaData.url" target="_blank">{{ websiteMetaData.url }}</a></ion-card-subtitle>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <p *ngIf="websiteMetaData.description !== null">{{ websiteMetaData.description | unescape }}</p>
+        <p *ngIf="websiteMetaData.title === null && websiteMetaData.description === null">
+          Unable to get website metadata for this address but you can still comment below.
+        </p>
+        <p class="float-right"><i>{{ websiteMetaData.type }}</i></p>
+      </ion-card-content>
+    </ion-card>
+  
+    <ion-card>
+      <form #comment="ngForm" (ngSubmit)="addPost(comment)">
+        <ion-item>
+          <ion-label>Add Comment: </ion-label>
+          <ion-textarea 
+            type="text" 
+            name="post" 
+            required 
+            ngModel 
+            clearOnEdit="true" 
+            (keyup)="checkCharLength(postInput.value)"
+            #postInput="ngModel"></ion-textarea>
+        </ion-item>
+        <div>
+          <p class="char-limit">Limit: {{ characterLimit }}</p>
+          <ion-button 
+            [disabled]="comment.invalid || characterLimit < 0"
+            class="float-right"
+            type="submit"
+            size="small">
+            Post
+          </ion-button>
+        </div>
+      </form>
+    </ion-card>
+
+    <ion-card>
+      <h6>Comments:</h6>
+      <!-- <ion-content role="feed"> -->
+        <ion-list *ngFor="let comment of comments">
+          <ion-item>
+            <p>{{ comment.post }}
+            <!-- <p>{{ comment.createdDate | date: 'dd/MM/yyyy hh:mm a' }}</p> -->
+              <br>
+              <i>{{ timeFromNow(comment.createdDate) }}</i>
+            </p>
+          </ion-item>
+        </ion-list>
+      <!-- </ion-content> -->
+    </ion-card>
+  </div>
+
+</ion-content>

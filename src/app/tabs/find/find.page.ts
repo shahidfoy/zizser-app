@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { Comment } from '../../model/comment';
@@ -15,12 +15,16 @@ import { timeFromNow } from '../../shared/date.utils';
 })
 export class FindPage implements OnInit {
 
+  @ViewChild('popover') popover;
+
   private readonly MAX_CHARS = 300;
 
+  companyName = 'ZIZseR';
   url: string = 'https://www.investorsobserver.com/news/stock-update/should-you-accumulate-unity-software-inc-u-stock-tuesday-morning-2';
   websiteMetaData: WebsiteMetaData = new WebsiteMetaData();
   characterLimit = this.MAX_CHARS;
   comments: Comment[];
+  isOpen = false;
 
   constructor(
     private commentService: CommentService,
@@ -36,8 +40,8 @@ export class FindPage implements OnInit {
         console.log('COMMENT');
         console.log(commentResponse);
         commentForm.resetForm();
-        // TODO:: DISPLAY COMMENTS ON SCREEN
         this.comments.unshift(commentResponse);
+        this.characterLimit = this.MAX_CHARS;
       }, (err: HttpErrorResponse) => {
         console.error(err.error.message);
         this.presentToast('top', err.error.message);
@@ -47,6 +51,11 @@ export class FindPage implements OnInit {
   checkCharLength(postValue: string) {
     this.characterLimit = this.MAX_CHARS;
     this.characterLimit -= postValue.length;
+  }
+
+  presentPopover(event: Event) {
+    this.popover.event = event;
+    this.isOpen = true;
   }
 
   async presentToast(position: 'top' | 'middle' | 'bottom', message: string) {

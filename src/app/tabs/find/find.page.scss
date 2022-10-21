@@ -9,7 +9,13 @@
     justify-content: center;
 }
 
+#how-it-works {
+    color: steelblue;
+}
+
 #title {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }

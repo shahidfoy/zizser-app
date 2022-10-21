@@ -6,6 +6,7 @@ export class WebsiteMetaData {
     public description: string;
     public imageLink: string;
     public type: string;
+    public viewCount: number;
 
     constructor() {
         this.id = undefined;
@@ -14,5 +15,6 @@ export class WebsiteMetaData {
         this.description = '';
         this.imageLink = '';
         this.type = '';
+        this.viewCount = 0;
     }
 }

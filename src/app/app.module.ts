@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UnescapePipe } from './pipe/unescape-pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { UnescapePipe } from './pipe/unescape-pipe';
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule,
+    NgbModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
